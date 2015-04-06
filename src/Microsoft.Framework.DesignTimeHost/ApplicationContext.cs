@@ -578,8 +578,9 @@ namespace Microsoft.Framework.DesignTimeHost
                     }
                 }
 
-                var diagnostics = compilation.ProjectReference.GetDiagnostics();
-                compilation.Diagnostics = diagnostics.Diagnostics.ToList();
+                compilation.Diagnostics = DiagnosticsUtils.GetAllReferenceProjectDiagnostics(
+                    project.ApplicationHostContext.LibraryManager,
+                    _local.ProjectInformation.Name);
 
                 _compilations[project.TargetFramework] = compilation;
 
