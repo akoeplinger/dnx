@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Micrsoft.Framework.Runtime.JsonDeserializer
+namespace Microsoft.Framework.Runtime.Json
 {
     internal class JsonString
     {

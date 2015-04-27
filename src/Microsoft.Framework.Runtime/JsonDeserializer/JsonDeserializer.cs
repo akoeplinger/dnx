@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace Micrsoft.Framework.Runtime.JsonDeserializer
+namespace Microsoft.Framework.Runtime.Json
 {
     internal class JsonDeserializer
     {
@@ -14,6 +14,10 @@ namespace Micrsoft.Framework.Runtime.JsonDeserializer
         internal const int DefaultMaxInputLength = 2097152;
 
         private JsonString _input;
+
+        public JsonDeserializer()
+        {
+        }
 
         public JsonDeserializer(int maxInputLength, int maxDeserializeDepth)
         {

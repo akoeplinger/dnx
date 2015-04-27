@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Micrsoft.Framework.Runtime.JsonDeserializer
+namespace Microsoft.Framework.Runtime.Json
 {
     /// <summary>
     /// This class contains utility methods for dealing with security contexts when crossing AppDomain boundaries.
