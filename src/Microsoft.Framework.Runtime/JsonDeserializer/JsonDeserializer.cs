@@ -8,14 +8,14 @@ using System.Text;
 
 namespace Micrsoft.Framework.Runtime.JsonDeserializer
 {
-    internal class JsonObjectDeserializer
+    internal class JsonDeserializer
     {
         internal const int DefaultMaxDeserializeDepth = 100;
         internal const int DefaultMaxInputLength = 2097152;
 
         private JsonString _input;
 
-        public JsonObjectDeserializer(int maxInputLength, int maxDeserializeDepth)
+        public JsonDeserializer(int maxInputLength, int maxDeserializeDepth)
         {
             MaxInputLength = maxInputLength;
             MaxDeserializeDepth = maxDeserializeDepth;
