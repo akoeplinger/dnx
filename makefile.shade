@@ -1138,11 +1138,18 @@ functions @{
         var sourceRuntime= Path.GetFileName(sourceDir);
         var destinationRuntime= sourceRuntime+ ".1.0.0-dev";
         var destinationDir = Path.Combine(FindRuntimePackagesFolder(), destinationRuntime);
-    
+
+        // Overwrite existing symbol link
         if (Directory.Exists(destinationDir)) 
         {
-            // Nothing to do, just return
-            return;
+            if (IsMono)
+            {
+                Exec("rm", "-rf " + destinationDir);
+            }
+            else
+            {
+                Exec("cmd", "/C rmdir " + destinationDir);
+            }
         }
     
         // Trim runtime name prefix part from alias to keep it short
