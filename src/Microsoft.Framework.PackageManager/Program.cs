@@ -520,12 +520,12 @@ namespace Microsoft.Framework.PackageManager
 
         private Reports CreateReports(bool verbose, bool quiet)
         {
-            IReport output = new Report(AnsiConsole.Output);
+            IReport output = new Report(AnsiConsole.GetOutput(_hostServices));
             var reports = new Reports()
             {
                 Information = output,
                 Verbose = verbose ? output : new NullReport(),
-                Error = new Report(AnsiConsole.Output),
+                Error = new Report(AnsiConsole.GetError(_hostServices)),
             };
 
             // If "--verbose" and "--quiet" are specified together, "--verbose" wins

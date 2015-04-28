@@ -9,22 +9,52 @@ namespace Microsoft.Framework.Runtime.Common.CommandLine
 {
     internal class AnsiConsole
     {
-        private AnsiConsole(TextWriter writer)
+        private AnsiConsole(TextWriter writer, IServiceProvider services)
         {
             Writer = writer;
-            OriginalForegroundColor = Console.ForegroundColor;
+
+            var runtimeEnv = (IRuntimeEnvironment)services.GetService(typeof(IRuntimeEnvironment));
+            var shouldParse = runtimeEnv.OperatingSystem == "Windows" || runtimeEnv.RuntimeType == "Mono";
+
+            if (shouldParse)
+            {
+                WriteLine = new WriteDelegate(WriteLineParse);
+                OriginalForegroundColor = Console.ForegroundColor;
+            }
+            else
+            {
+                WriteLine = new WriteDelegate(WriteLineNoParse);
+            }
         }
 
         private int _boldRecursion;
+        public delegate void WriteDelegate(string message);
+        public WriteDelegate WriteLine;
+        static private AnsiConsole Output = null;
+        static private AnsiConsole Error = null;
 
-        public static AnsiConsole Output = new AnsiConsole(Console.Out);
+        public static AnsiConsole GetOutput(IServiceProvider services)
+        {
+            if (Output == null)
+            {
+                Output = new AnsiConsole(Console.Out, services);
+            }
+            return Output;
+        }
 
-        public static AnsiConsole Error = new AnsiConsole(Console.Error);
+        public static AnsiConsole GetError(IServiceProvider services)
+        {
+            if (Error == null)
+            {
+                Error = new AnsiConsole(Console.Error, services);
+            }
+            return Error;
+        }
 
         public TextWriter Writer { get; }
 
         public ConsoleColor OriginalForegroundColor { get; }
-        
+
         private void SetColor(ConsoleColor color)
         {
             Console.ForegroundColor = (ConsoleColor)(((int)Console.ForegroundColor & 0x08) | ((int)color & 0x07));
@@ -41,7 +71,12 @@ namespace Microsoft.Framework.Runtime.Common.CommandLine
             Console.ForegroundColor = (ConsoleColor)((int)Console.ForegroundColor ^ 0x08);
         }
 
-        public void WriteLine(string message)
+        private void WriteLineNoParse(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        private void WriteLineParse(string message)
         {
             var sb = new StringBuilder();
             var escapeScan = 0;
