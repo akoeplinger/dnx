@@ -7,3 +7,6 @@ mono:
 script:
   - date
   - ./build.sh --quiet verify
+cache:
+  directories:
+    - $HOME/.dnx/packages
