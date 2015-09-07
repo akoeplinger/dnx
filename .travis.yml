@@ -1,5 +1,7 @@
 language: csharp
 sudo: false
+cache:
+  - /home/travis/.dnx
 env:
   - MONO_THREADS_PER_CPU=2000
 os:
