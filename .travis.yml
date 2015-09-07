@@ -1,7 +1,8 @@
 language: csharp
 sudo: false
 cache:
-  - /home/travis/.dnx
+  directories:
+    - $HOME/.dnx
 env:
   - MONO_THREADS_PER_CPU=2000
 os:
