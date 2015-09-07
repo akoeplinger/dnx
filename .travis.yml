@@ -3,8 +3,6 @@ sudo: false
 cache:
   directories:
     - $HOME/.dnx
-env:
-  - MONO_THREADS_PER_CPU=2000
 os:
   - linux
   - osx
