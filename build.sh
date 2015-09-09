@@ -11,7 +11,7 @@ else
 fi
 mkdir -p $cachedir
 
-url=https://www.nuget.org/nuget.exe
+url=http://dist.nuget.org/win-x86-commandline/v3.1.0-beta/nuget.exe
 
 if test ! -f $cachedir/nuget.exe; then
     wget -O $cachedir/nuget.exe $url 2>/dev/null || curl -o $cachedir/nuget.exe --location $url /dev/null
